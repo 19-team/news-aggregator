@@ -10,8 +10,7 @@ import java.util.List;
  * Created by Павло on 03.10.2017.
  */
 public interface CategoryRepository extends JpaRepository<Category, Long> {
-  
-    @Query("select category from Category as category")
-    Category> getCategoryByName();
+
+    Category findCategoryByCategoryName(String categoryName);
 
 }
