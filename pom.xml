@@ -97,6 +97,14 @@
             <artifactId>spring-tx</artifactId>
             <version>4.3.10.RELEASE</version>
         </dependency>
+
+        <!-- Rome -->
+        <dependency>
+            <groupId>com.rometools</groupId>
+            <artifactId>rome</artifactId>
+            <version>1.8.0</version>
+        </dependency>
+
     </dependencies>
 
 </project>
