@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Created by Павло on 03.10.2017.
+ * Simple JavaBean domain object that represents a feed item.
  */
 @Entity(name = "FeedItem")
 @Table(name = "feed_items")
@@ -17,6 +17,9 @@ public class FeedItem implements Serializable {
     @GeneratedValue
     @Column(name = "id", nullable = false, unique = true, updatable = false)
     private Long id;
+
+    @Column(name = "feed_title", nullable = false, updatable = false)
+    private String feedTitle;
 
     @Column(name = "feed_link", nullable = false, updatable = false)
     private String feedUrl;
@@ -30,7 +33,7 @@ public class FeedItem implements Serializable {
     @OneToMany
     private List<Category> categories;
 
-    @Column(name = "feed_viewer_counts", nullable = false, updatable = false)
+    @Column(name = "feed_viewer_counts", nullable = false)
     private Integer feedViewerCount = 0;
 
     @OneToMany
@@ -39,8 +42,9 @@ public class FeedItem implements Serializable {
     public FeedItem() {
     }
 
-    public FeedItem(String feedUrl, String feedDescription, Date feedPubDate, List<Category> categories, Integer feedViewerCount,
+    public FeedItem(String feedTitle, String feedUrl, String feedDescription, Date feedPubDate, List<Category> categories, Integer feedViewerCount,
                     FeedChannel feedChannel) {
+        this.feedTitle = feedTitle;
         this.feedUrl = feedUrl;
         this.feedDescription = feedDescription;
         this.feedPubDate = feedPubDate;
@@ -55,6 +59,14 @@ public class FeedItem implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getFeedTitle() {
+        return feedTitle;
+    }
+
+    public void setFeedTitle(String feedTitle) {
+        this.feedTitle = feedTitle;
     }
 
     public String getFeedUrl() {
@@ -105,6 +117,7 @@ public class FeedItem implements Serializable {
         this.feedChannel = feedChannel;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -135,4 +148,5 @@ public class FeedItem implements Serializable {
                 ", feedChannel=" + feedChannel +
                 '}';
     }
+
 }

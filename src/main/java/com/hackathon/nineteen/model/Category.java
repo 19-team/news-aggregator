@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * Created by Павло on 03.10.2017.
+ * Simple JavaBean domain object that represents a feed category
  */
 @Entity(name = "Category")
 @Table(name = "categories")

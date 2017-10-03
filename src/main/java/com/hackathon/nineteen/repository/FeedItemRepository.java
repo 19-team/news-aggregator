@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface FeedItemRepository extends JpaRepository<FeedItem, Long> {
 
-    List<FeedItem> findFeedItemsByCategorie(Category category);
+    List<FeedItem> findFeedItemsByCategory(Category category);
     List<FeedItem> findFeedItemsByFeedChannelId(Long id);
 
 }

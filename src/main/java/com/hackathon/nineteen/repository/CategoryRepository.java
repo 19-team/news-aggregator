@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface CategoryRepository extends JpaRepository<Category, Long> {
     @Query("select category.categoryName from Category as category")
-    List<String> getCategoriesByCategoryName();
+    List<String> getCategoryByCategoryName();
 }
