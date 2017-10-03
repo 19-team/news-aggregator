@@ -1,5 +1,5 @@
 # Hack News Aggregator
-###### See demo - [https://hack-news-aggregator.herokuapp.com](https://hack-news-aggregator.herokuapp.com) 
+
 ---
 ## Огляд
 Hack News Aggregator - агрегатор новин, який використовує популярні українські інтернет канали новин (RSS) для того, щоб ви завжди залишались в курсі подій. 
