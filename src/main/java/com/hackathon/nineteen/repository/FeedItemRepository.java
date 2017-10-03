@@ -1,9 +1,7 @@
 package com.hackathon.nineteen.repository;
 
-import com.hackathon.nineteen.model.Category;
 import com.hackathon.nineteen.model.FeedItem;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -12,7 +10,7 @@ import java.util.List;
  */
 public interface FeedItemRepository extends JpaRepository<FeedItem, Long> {
 
-    List<FeedItem> findFeedItemsByCategory(Category category);
+
     List<FeedItem> findFeedItemsByFeedChannelId(Long id);
 
 }
