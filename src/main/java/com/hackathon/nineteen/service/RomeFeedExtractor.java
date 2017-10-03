@@ -55,7 +55,7 @@ public class RomeFeedExtractor implements FeedExtractor {
             List<Category> categories = new LinkedList<Category>();
 
             for(SyndCategory c : syndEntry.getCategories() ){
-                Category category = categoryRepository.getCategoryByCategoryName(c.getName());
+                Category category = categoryRepository.findCategoryByCategoryName(c.getName());
                 if(category == null){
                     category = new Category();
                     category.setCategoryName(c.getName());
