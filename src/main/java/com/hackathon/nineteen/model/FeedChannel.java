@@ -1,5 +1,7 @@
 package com.hackathon.nineteen.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -7,73 +9,24 @@ import java.util.Objects;
 /**
  * Simple JavaBean domain object that represents a feed channel.
  */
-@Entity(name = "FeedChannel")
+@Entity
 @Table(name = "feed_channels")
+@Data
 public class FeedChannel implements Serializable {
 
+    private static final int START_SEQ = 1;
+
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = "glob_seq", sequenceName = "glob_seq", allocationSize = 1, initialValue = START_SEQ)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "glob_seq")
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "chanel_link", nullable = false, updatable = false)
+    @Column(name = "channel_link", nullable = false, updatable = false)
     private String channelLink;
 
     @Column(name = "channel_title", nullable = false, updatable = false)
     private String channelTitle;
 
-    public FeedChannel() {
-    }
 
-    public FeedChannel(String channelLink, String channelTitle) {
-        this.channelLink = channelLink;
-        this.channelTitle = channelTitle;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getChannelLink() {
-        return channelLink;
-    }
-
-    public void setChannelLink(String channelLink) {
-        this.channelLink = channelLink;
-    }
-
-    public String getChannelTitle() {
-        return channelTitle;
-    }
-
-    public void setChannelTitle(String channelTitle) {
-        this.channelTitle = channelTitle;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FeedChannel that = (FeedChannel) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(channelLink, that.channelLink) &&
-                Objects.equals(channelTitle, that.channelTitle);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, channelLink, channelTitle);
-    }
-
-    @Override
-    public String toString() {
-        return "FeedChannel{" +
-                "channelLink='" + channelLink + '\'' +
-                ", channelTitle='" + channelTitle + '\'' +
-                '}';
-    }
 }
