@@ -16,7 +16,12 @@ public class FeedItemServiceImpl implements  FeedItemService{
 
 
     @Override
-    public List<FeedItem> getAll() {
+    public List<FeedItem> getAllAsc() {
        return  feedItemRepository.findAllByOrderByFeedPubDateAsc();
+    }
+
+    @Override
+    public List<FeedItem> getAllDesc() {
+        return  feedItemRepository.findAllByOrderByFeedPubDateDesc();
     }
 }

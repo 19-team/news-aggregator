@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface FeedItemService {
 
-    List<FeedItem> getAll();
+    List<FeedItem> getAllAsc();
+
+    List<FeedItem> getAllDesc();
 }

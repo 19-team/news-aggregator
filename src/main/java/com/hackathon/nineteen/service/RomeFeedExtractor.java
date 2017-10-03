@@ -5,6 +5,7 @@ import com.hackathon.nineteen.model.FeedChannel;
 import com.hackathon.nineteen.model.FeedItem;
 import com.hackathon.nineteen.repository.CategoryRepository;
 import com.hackathon.nineteen.repository.FeedChannelRepository;
+import com.hackathon.nineteen.repository.FeedItemRepository;
 import com.rometools.rome.feed.synd.SyndCategory;
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
@@ -28,7 +29,10 @@ public class RomeFeedExtractor implements FeedExtractor {
     @Autowired
     CategoryRepository categoryRepository;
 
-    public List<FeedItem> extractFeedItems(String feedUrl) throws IOException, FeedException {
+    @Autowired
+    FeedItemRepository feedItemRepository;
+
+    public void extractFeedItems(String feedUrl) throws IOException, FeedException {
 
         URL url = new URL(feedUrl);
         SyndFeedInput input = new SyndFeedInput();
@@ -36,41 +40,43 @@ public class RomeFeedExtractor implements FeedExtractor {
 
         FeedChannel channel = feedChannelRepository.findFeedChannelsByChannelLink(feed.getLink());
 
-        if(channel == null) {
+        if (channel == null) {
             channel = new FeedChannel();
             channel.setChannelLink(feed.getLink());
             channel.setChannelTitle(feed.getTitle());
             feedChannelRepository.save(channel);
         }
 
-        List<FeedItem> feedItems = new LinkedList<FeedItem>();
 
         for (SyndEntry syndEntry : feed.getEntries()) {
 
-            FeedItem feedItem = new FeedItem();
-            feedItem.setFeedUrl(syndEntry.getLink());
-            feedItem.setFeedDescription(syndEntry.getDescription().getValue());
-            feedItem.setFeedPubDate(syndEntry.getPublishedDate());
+            FeedItem feedItem = feedItemRepository.findFeedItemByFeedUrl(syndEntry.getLink());
 
-            List<Category> categories = new LinkedList<Category>();
+            if (feedItem == null) {
+                feedItem = new FeedItem();
+                feedItem.setFeedTitle(syndEntry.getTitle());
+                feedItem.setFeedUrl(syndEntry.getLink());
+                feedItem.setFeedDescription(syndEntry.getDescription().getValue());
+                feedItem.setFeedPubDate(syndEntry.getPublishedDate());
 
-            for(SyndCategory c : syndEntry.getCategories() ){
-                Category category = categoryRepository.findCategoryByCategoryName(c.getName());
-                if(category == null){
-                    category = new Category();
-                    category.setCategoryName(c.getName());
-                    categoryRepository.save(category);
+
+                List<Category> categories = new LinkedList<Category>();
+
+                for (SyndCategory c : syndEntry.getCategories()) {
+                    Category category = categoryRepository.findCategoryByCategoryName(c.getName());
+                    if (category == null) {
+                        category = new Category();
+                        category.setCategoryName(c.getName());
+                        categoryRepository.save(category);
+                    }
+                    categories.add(category);
                 }
-                categories.add(category);
+
+                feedItem.setCategories(categories);
+
+                feedItem.setFeedChannel(channel);
+                feedItemRepository.save(feedItem);
             }
-
-            feedItem.setCategories(categories);
-
-            feedItem.setFeedChannel(channel);
-
-            feedItems.add(feedItem);
         }
-
-        return feedItems;
     }
 }

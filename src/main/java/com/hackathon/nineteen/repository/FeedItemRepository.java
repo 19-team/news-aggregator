@@ -10,7 +10,9 @@ import java.util.List;
  */
 public interface FeedItemRepository extends JpaRepository<FeedItem, Long> {
 
+    FeedItem findFeedItemByFeedUrl(String feedUrl);
 
-    List<FeedItem> findFeedItemsByFeedChannelId(Long id);
+    List <FeedItem> findAllByOrderByFeedPubDateDesc();
 
+    List <FeedItem> findAllByOrderByFeedPubDateAsc();
 }

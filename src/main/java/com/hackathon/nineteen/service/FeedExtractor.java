@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface FeedExtractor {
 
-    public List<FeedItem> extractFeedItems(String feedUrl) throws IOException, FeedException;
+    public void extractFeedItems(String feedUrl) throws IOException, FeedException;
 }

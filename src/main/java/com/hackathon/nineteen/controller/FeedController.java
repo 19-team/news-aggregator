@@ -4,6 +4,7 @@ import com.hackathon.nineteen.model.FeedChannel;
 import com.hackathon.nineteen.model.FeedItem;
 import com.hackathon.nineteen.service.FeedChannelService;
 import com.hackathon.nineteen.service.FeedExtractor;
+import com.hackathon.nineteen.service.FeedItemService;
 import com.rometools.rome.io.FeedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,23 +20,32 @@ import java.util.List;
 public class FeedController {
 
     @Autowired
-    FeedExtractor feedExtractor;
+    FeedItemService feedItemService;
 
     @Autowired
     FeedChannelService feedChannelService;
 
+    @Autowired
+    FeedExtractor feedExtractor;
+
     private List<FeedItem> feedItems;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String getFeed(Model model) throws IOException, FeedException {
+    public String getNewFeed(Model model) throws IOException, FeedException {
 
         List <FeedItem> items = new LinkedList<FeedItem>();
 
-        for(FeedChannel feedChannel : feedChannelService.getAll()){
-            items.addAll(feedExtractor.extractFeedItems(feedChannel.getChannelLink()));
-        }
+        model.addAttribute("items", feedItemService.getAllDesc());
 
-        model.addAttribute("items", items);
+        return "index";
+    }
+
+    @RequestMapping(value = "/desc", method = RequestMethod.GET)
+    public String getOldFeed(Model model) throws IOException, FeedException {
+
+        List <FeedItem> items = new LinkedList<FeedItem>();
+
+        model.addAttribute("items", feedItemService.getAllAsc());
 
         return "index";
     }

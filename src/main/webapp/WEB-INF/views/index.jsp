@@ -1,3 +1,9 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -5,93 +11,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="../../assets/ico/favicon.png">
 
-    <title>Narrow Jumbotron Template for {{ site.app_name }}</title>
-  <!-- Bootstrap core CSS -->
-  <link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
- 
-   <!-- Custom styles for this template -->
-   <link href="../../resources/css/main.css" rel="stylesheet">
+    <title>News Aggregator</title>
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="../../assets/js/html5shiv.js"></script>
-      <script src="../../assets/js/respond.min.js"></script>
-    <![endif]-->
+    <!-- Bootstrap Core CSS -->
+    <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="${contextPath}/resources/css/main.css" rel="stylesheet">
+
   </head>
 
   <body>
 
     <div class="container">
       <div class="header">
-        <h3 class="text-muted">Project name</h3>
+        <h3 class="text-muted">News Aggregator</h3>
       </div>
+        <p><a href="/desc">Show older news</a></p>
+      <c:if test="${not empty items}">
+        <c:forEach var="fi" items="${items}">
+          <div class="jumbotron">
+            <h1><c:out value="${fi.feedTitle}"/></h1>
+            <p class="lead"><c:out value="${fi.feedDescription}"/></p>
+            <p><a class="btn btn-primary" href="<c:out value="${fi.feedUrl}"/>" role="button">See more</a></p>
+              <p><b>Date:</b> <c:out value="${fi.feedPubDate.toLocaleString()}"/><br> <b>Views:</b> <c:out value="${fi.feedViewerCount}"/><br><b>Source: </b><c:out value="${fi.feedChannel.channelTitle}"/></p>
+          </div>
+        </c:forEach>
+      </c:if>
 
-      <div class="jumbotron">
-        <h1>News heading</h1>
-        <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-        <p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>
-      </div>
-
-      <div class="jumbotron">
-        <h1>News heading</h1>
-        <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-        <p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>
-      </div>
-
-      <div class="jumbotron">
-        <h1>News heading</h1>
-        <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-        <p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>
-      </div>
-
-      <div class="jumbotron">
-        <h1>News heading</h1>
-        <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-        <p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>
-      </div>
-
-      <div class="jumbotron">
-        <h1>News heading</h1>
-        <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-        <p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>
-      </div>
-
-      <!-- <div class="row marketing">
-        <div class="col-lg-6">
-          <h4>Subheading</h4>
-          <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-          <h4>Subheading</h4>
-          <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-          <h4>Subheading</h4>
-          <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-        </div>
-
-        <div class="col-lg-6">
-          <h4>Subheading</h4>
-          <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-          <h4>Subheading</h4>
-          <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-          <h4>Subheading</h4>
-          <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-        </div>
-      </div> -->
 
       <div class="footer">
-        <p>&copy; Company 2013</p>
+        <p>&copy; 19-team 2017</p>
       </div>
 
     </div> <!-- /container -->
-
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
 
   </body>
 </html>
