@@ -3,10 +3,11 @@ package com.hackathon.nineteen.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 /**
- * Created by Павло on 03.10.2017.
+ * Simple JavaBean domain object that represents a feed item.
  */
 @Entity(name = "FeedItem")
 @Table(name = "feed_items")
@@ -17,6 +18,9 @@ public class FeedItem implements Serializable {
     @Column(name = "id", nullable = false, unique = true, updatable = false)
     private Long id;
 
+    @Column(name = "feed_title", nullable = false, updatable = false)
+    private String feedTitle;
+
     @Column(name = "feed_link", nullable = false, updatable = false)
     private String feedUrl;
 
@@ -26,11 +30,11 @@ public class FeedItem implements Serializable {
     @Column(name = "feed_publication_date", nullable = false, updatable = false)
     private Date feedPubDate;
 
-    @Column(name = "feed_category", nullable = false, updatable = false)
-    private String feedCategory;
+    @OneToMany
+    private List<Category> categories;
 
-    @Column(name = "feed_viewer_counts", nullable = false, updatable = false)
-    private Integer feedViewerCount;
+    @Column(name = "feed_viewer_counts", nullable = false)
+    private Integer feedViewerCount = 0;
 
     @OneToMany
     private FeedChannel feedChannel;
@@ -38,12 +42,13 @@ public class FeedItem implements Serializable {
     public FeedItem() {
     }
 
-    public FeedItem(String feedUrl, String feedDescription, Date feedPubDate, String feedCategory,
-                    Integer feedViewerCount, FeedChannel feedChannel) {
+    public FeedItem(String feedTitle, String feedUrl, String feedDescription, Date feedPubDate, List<Category> categories, Integer feedViewerCount,
+                    FeedChannel feedChannel) {
+        this.feedTitle = feedTitle;
         this.feedUrl = feedUrl;
         this.feedDescription = feedDescription;
         this.feedPubDate = feedPubDate;
-        this.feedCategory = feedCategory;
+        this.categories = categories;
         this.feedViewerCount = feedViewerCount;
         this.feedChannel = feedChannel;
     }
@@ -54,6 +59,14 @@ public class FeedItem implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getFeedTitle() {
+        return feedTitle;
+    }
+
+    public void setFeedTitle(String feedTitle) {
+        this.feedTitle = feedTitle;
     }
 
     public String getFeedUrl() {
@@ -80,12 +93,12 @@ public class FeedItem implements Serializable {
         this.feedPubDate = feedPubDate;
     }
 
-    public String getFeedCategory() {
-        return feedCategory;
+    public List<Category> getCategories() {
+        return categories;
     }
 
-    public void setFeedCategory(String feedCategory) {
-        this.feedCategory = feedCategory;
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 
     public Integer getFeedViewerCount() {
@@ -104,6 +117,7 @@ public class FeedItem implements Serializable {
         this.feedChannel = feedChannel;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -113,14 +127,14 @@ public class FeedItem implements Serializable {
                 Objects.equals(feedUrl, feedItem.feedUrl) &&
                 Objects.equals(feedDescription, feedItem.feedDescription) &&
                 Objects.equals(feedPubDate, feedItem.feedPubDate) &&
-                Objects.equals(feedCategory, feedItem.feedCategory) &&
+                Objects.equals(categories, feedItem.categories) &&
                 Objects.equals(feedViewerCount, feedItem.feedViewerCount) &&
                 Objects.equals(feedChannel, feedItem.feedChannel);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, feedUrl, feedDescription, feedPubDate, feedCategory, feedViewerCount, feedChannel);
+        return Objects.hash(id, feedUrl, feedDescription, feedPubDate, categories, feedViewerCount, feedChannel);
     }
 
     @Override
@@ -129,9 +143,10 @@ public class FeedItem implements Serializable {
                 "feedUrl='" + feedUrl + '\'' +
                 ", feedDescription='" + feedDescription + '\'' +
                 ", feedPubDate=" + feedPubDate +
-                ", feedCategory='" + feedCategory + '\'' +
+                ", categories=" + categories.toArray().toString() +
                 ", feedViewerCount=" + feedViewerCount +
                 ", feedChannel=" + feedChannel +
                 '}';
     }
+
 }

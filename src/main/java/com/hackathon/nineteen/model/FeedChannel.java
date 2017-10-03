@@ -1,33 +1,33 @@
 package com.hackathon.nineteen.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * Created by Павло on 03.10.2017.
+ * Simple JavaBean domain object that represents a feed channel.
  */
-@Entity(name = "FeedItem")
+@Entity(name = "FeedChannel")
 @Table(name = "feed_channels")
 public class FeedChannel implements Serializable {
 
+    @Id
+    @GeneratedValue
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
     @Column(name = "chanel_link", nullable = false, updatable = false)
-    private String chanelLink;
+    private String channelLink;
 
     @Column(name = "channel_title", nullable = false, updatable = false)
-    private String chanelTitle;
+    private String channelTitle;
 
     public FeedChannel() {
     }
 
-    public FeedChannel(String chanelLink, String chanelTitle) {
-        this.chanelLink = chanelLink;
-        this.chanelTitle = chanelTitle;
+    public FeedChannel(String channelLink, String channelTitle) {
+        this.channelLink = channelLink;
+        this.channelTitle = channelTitle;
     }
 
     public Long getId() {
@@ -38,20 +38,20 @@ public class FeedChannel implements Serializable {
         this.id = id;
     }
 
-    public String getChanelLink() {
-        return chanelLink;
+    public String getChannelLink() {
+        return channelLink;
     }
 
-    public void setChanelLink(String chanelLink) {
-        this.chanelLink = chanelLink;
+    public void setChannelLink(String channelLink) {
+        this.channelLink = channelLink;
     }
 
-    public String getChanelTitle() {
-        return chanelTitle;
+    public String getChannelTitle() {
+        return channelTitle;
     }
 
-    public void setChanelTitle(String chanelTitle) {
-        this.chanelTitle = chanelTitle;
+    public void setChannelTitle(String channelTitle) {
+        this.channelTitle = channelTitle;
     }
 
     @Override
@@ -60,20 +60,20 @@ public class FeedChannel implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         FeedChannel that = (FeedChannel) o;
         return Objects.equals(id, that.id) &&
-                Objects.equals(chanelLink, that.chanelLink) &&
-                Objects.equals(chanelTitle, that.chanelTitle);
+                Objects.equals(channelLink, that.channelLink) &&
+                Objects.equals(channelTitle, that.channelTitle);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, chanelLink, chanelTitle);
+        return Objects.hash(id, channelLink, channelTitle);
     }
 
     @Override
     public String toString() {
         return "FeedChannel{" +
-                "chanelLink='" + chanelLink + '\'' +
-                ", chanelTitle='" + chanelTitle + '\'' +
+                "channelLink='" + channelLink + '\'' +
+                ", channelTitle='" + channelTitle + '\'' +
                 '}';
     }
 }
